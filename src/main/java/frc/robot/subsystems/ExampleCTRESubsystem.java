@@ -25,8 +25,8 @@ public class ExampleCTRESubsystem extends SubsystemBase {
     public ExampleCTRESubsystem(){
         SmartDashboard.putNumber("Shooter Target RPM", exampleTargetRPM);
 
-        // This is needed because if you are using a CANivar  
-        // you need to change rio to the name of the CANivar
+        // This is needed because if you are using a CANivore  
+        // you need to change rio to the name of the CANivore
         shooterLeader = new TalonFX(shooterIDCTRE, "rio");
         shooterFollower = new TalonFX(followerIDCTRE, "rio");
 
