@@ -21,26 +21,36 @@ public class VisionSubsytem extends SubsystemBase {
     private PhotonPipelineResult latestResult = new PhotonPipelineResult();
 
     public VisionSubsytem(){
+        // Fully set up the cameras
         tagCamera = new PhotonCamera(aprilTagCameraName);
-
         driveCamera = new PhotonCamera(diverCameraName);
+        // Driver mode maks it so the camera is just a normal camera
+        // TAGS WILL NOT BE READ WHILE IN DRIVE RMODE
         driveCamera.setDriverMode(true);
-
         tagCamera.setDriverMode(true);
     }
 
+    // This is used to switch the camera's mode when called
+    // True = drivermode
+    // False = look for tags (Idk what it is called :P)
     public void setAprilTagDriverMode(boolean driverMode){
         tagCamera.setDriverMode(driverMode);
     }
 
     @Override
     public void periodic() {
+        // This is only return the tag while not in driver mode
         latestResult = tagCamera.getLatestResult();
 
+        // I feel like I don't need to exspain this but
+        // aimed is the camera sees the tag
+        // inRange the tag is within a certain range
+        // ready both of them put together 
         boolean aimed   = isAimedAtGoal();
         boolean inRange = isInRangeOfGoal();
         boolean ready   = aimed && inRange;
 
+        // Put the booleans on the dashboard
         SmartDashboard.putBoolean("Shot Ready",    ready);
         SmartDashboard.putBoolean("Aimed at Goal", aimed);
         SmartDashboard.putBoolean("In Range",      inRange);
@@ -57,6 +67,7 @@ public class VisionSubsytem extends SubsystemBase {
             SmartDashboard.putNumber("Goal Tag ID",       t.getFiducialId());
         });
 
+        // This will put the tag numbers on the dashboard that the camera can see
         String visibleTags = latestResult.hasTargets()
             ? latestResult.getTargets().stream()
                 .map(t -> String.valueOf(t.getFiducialId()))
@@ -65,10 +76,13 @@ public class VisionSubsytem extends SubsystemBase {
             : "None" ;
         SmartDashboard.putString("Visible Tags", visibleTags);
 
+        // Most likly you will not need all of the tags on the field so
+        // this is to make sure that you only are using the ones you need.
         int[] allianceIds = getAllianceTagIds();
         SmartDashboard.putString("Alliance Tag IDs", Arrays.toString(allianceIds));
     }
 
+    // Same thing only using the tag you have in the Constants.java for each side of the field
     private int[] getAllianceTagIds() {
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == Alliance.Red) {
@@ -77,6 +91,7 @@ public class VisionSubsytem extends SubsystemBase {
         return blueTagIds;
     }
 
+    // This is for finding the closest tag that the camera can see the best
     public Optional<PhotonTrackedTarget> getBestGoalTarget() {
         if (!latestResult.hasTargets()) return Optional.empty();
 
@@ -86,10 +101,14 @@ public class VisionSubsytem extends SubsystemBase {
             .max((a, b) -> Double.compare(a.getArea(), b.getArea()));
     }
     
+    // Get the degree of the best visible tag
     public Optional<Double> getGoalYawDeg() {
         return getBestGoalTarget().map(PhotonTrackedTarget::getYaw);
     }
 
+    // Gets the distance (in meters) with accounting for the camera's position on the robot
+    // and the angle of the camera then moves that number to estimate the distance from the
+    // exit of the shooter
     public Optional<Double> getGoalDistanceMeters() {
         return getBestGoalTarget().map(t ->  {
             Pose3d targetInRobotFrame = new Pose3d()
@@ -101,16 +120,19 @@ public class VisionSubsytem extends SubsystemBase {
         });
     }
 
+    // Is the goal tag in the camera view
     public boolean isAimedAtGoal() {
         var yaw = getGoalYawDeg();
         return yaw.isPresent() && Math.abs(yaw.get()) <= aimToleranceDeg;
     }
 
+    // Is the tag close enough
     public boolean isInRangeOfGoal() {
         var dist = getGoalDistanceMeters();
         return dist.isPresent() && dist.get() <= (desiredShotRangeMeters + rangeToleranceM);
     }
 
+    // Is goal tag in camera view AND is close enough
     public boolean isReadyRoShoot() {
         return isAimedAtGoal() && isInRangeOfGoal();
     }
