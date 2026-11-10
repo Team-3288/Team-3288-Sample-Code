@@ -39,6 +39,7 @@ public final class Constants {
   }
 
   public static class JoystickButtons {
+    // Use this so you can name you button commands what they do not what button they are!!!
     public static final int squareButton = 1;
     public static final int xButton = 2;
     public static final int oButton = 3;

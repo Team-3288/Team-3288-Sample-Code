@@ -106,6 +106,7 @@ public class RobotContainer {
         
         double x = leftY();
         double y = leftX();
+        // This is for rotation
         double rot = rightY();
 
         var alliance = DriverStation.getAlliance();
@@ -124,12 +125,13 @@ public class RobotContainer {
     // This is important DO NO DELETE
     drivetrain.registerTelemetry(logger::telemeterize);
 
+    // Name your button commands something that will help you  remeber what they do
+    // This will help you coding and exsplaining what each button does to the driver
+    // DO NOT keep them in you head like I did it is not a good way to do it
     JoystickButton runSparkExample = new JoystickButton(operatorController, oButton);
-
     JoystickButton runCTREExample = new JoystickButton(operatorController, triangleButton);
 
     runSparkExample.whileTrue(new ExampleCTRECommand(exampleCTRESubsystem, exampleTargetRPM));
-
     runCTREExample.whileTrue(new ExampleSparkCommand(exampleSparkSubsystem, exampleTargetVolts));
   }
 

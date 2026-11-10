@@ -99,6 +99,7 @@ public class ExampleSparkSubsystem extends SubsystemBase {
     }
 
     // Set the voltage for the shooter
+    // NOTE: it is a lot easier to uses volts instead of rpm like with CTRE
     public void setVoltage(double voltage){
         shooterMotorMax.setVoltage(voltage);
     }

@@ -7,6 +7,7 @@ public class ExampleSparkCommand extends Command {
 
     // This is the command for a spark subsystem 
     // make sure you put in the names right.
+    // NOTE: it is a lot easier to uses volts instead of rpm like with CTRE
     private final ExampleSparkSubsystem spark;
     private final double volts;
 

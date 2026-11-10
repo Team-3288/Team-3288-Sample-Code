@@ -1,0 +1,11 @@
+This is just general notes that I feel like are important some of these are in the code and ome are not
+
+Name your joystick buttons what they do not what button they are that is why I put the buttons name in Constants.java so you can name stuff more easily.
+
+Don't touch Telemetry.java or TunerConstants.java by hand those are the main files that makes swerve drive work with CTRE. If you ever need to change the modules offset use the CTRE app and do it that way
+
+Main.java and Robot.java are off limits they are the MAIN files that run the bot if you mess with them you might break your code and bot.
+
+ADD COMMENTS TO EVERY THING YOU WILL THANK YOUR SELF LATER
+
+Don't be afried to ask me or someone else for help 9 times out of 10 it is better to ask then mess with the same thing for over a week. You don't have a lot of time to make the code let a lone test so ask.

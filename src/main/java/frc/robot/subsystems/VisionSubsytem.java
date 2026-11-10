@@ -42,7 +42,7 @@ public class VisionSubsytem extends SubsystemBase {
         // This is only return the tag while not in driver mode
         latestResult = tagCamera.getLatestResult();
 
-        // I feel like I don't need to exspain this but
+        // I feel like I don't need to exsplain this but
         // aimed is the camera sees the tag
         // inRange the tag is within a certain range
         // ready both of them put together 
