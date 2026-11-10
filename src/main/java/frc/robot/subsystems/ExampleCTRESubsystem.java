@@ -16,7 +16,6 @@ import static frc.robot.Constants.ShooterConstants.*;
 public class ExampleCTRESubsystem extends SubsystemBase {
 
     // This is almost the same as Spark but with a few key differences
-
     private final TalonFX shooterLeader;
     private final TalonFX shooterFollower;
 

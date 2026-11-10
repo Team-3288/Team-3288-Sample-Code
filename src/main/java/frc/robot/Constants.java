@@ -60,6 +60,7 @@ public final class Constants {
 
     // Camera position relative to the shooter/robot center.
     // X = forward, Y = left, Z = up (WPILib convention).
+    // NOTE: Below is an example
     // Camera is 9 inches to the RIGHT of the shooter (-Y), same height, tilted up 3 degrees (-pitch).
     public static final Transform3d kRobotToCamera = new Transform3d(
         Units.inchesToMeters(0),      // X: forward/back offset
@@ -71,6 +72,8 @@ public final class Constants {
     public static final double aimToleranceDeg = 0;
     public static final double rangeToleranceM = 0;
 
+    // You will need to fill these in when you find the tags you want to use
+    // NOTE: any tag that is not in the array will be ignored.
     public static final int[] redTagIds = {};
     public static final int[] blueTagIds = {};
 
